@@ -1,4 +1,5 @@
 import { Model } from '@nozbe/watermelondb'
+import { children, date, text } from '@nozbe/watermelondb/decorators'
 
 export default class Category extends Model {
   static table = 'categories'
@@ -8,5 +9,11 @@ export default class Category extends Model {
   }
 
   @text('name') name
-  @field('amount') amount
+  @text('icon_name') iconName
+  @text('icon_type') iconType
+
+  @date('created_at') createdAt
+  @date('updated_at') updatedAt
+
+  @children('expenses') expenses
 }
