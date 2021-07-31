@@ -1,15 +1,16 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import ExpensesScreen from '../screens/expenses/ExpensesScreen'
+import ExpenseList from '../components/ExpenseList'
+import {database} from '../../index'
 
 const Stack = createStackNavigator()
 
-const HomeNavigator = () => {
+const Home = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Expenses" component={ExpensesScreen} />
+            <Stack.Screen name="ExpenseList" component={ExpenseList} />
         </Stack.Navigator>
     )
 }
 
-export default HomeNavigator
+export default Home
