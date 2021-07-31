@@ -28,6 +28,7 @@ export default appSchema({
             {name: 'name', type: 'string'},
             {name: 'account_id', type: 'string', isIndexed: true},
             {name: 'category_id', type: 'string', isIndexed: true},
+            {name: 'amount', type: 'number'},
             { name: 'created_at', type: 'number' },
             { name: 'updated_at', type: 'number' }
         ]
