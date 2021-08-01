@@ -12,11 +12,19 @@ const makeCategory = (db, categoryDetail) => db.collections.get('categories').pr
     category.icon_type = categoryDetail['icon_type']
 })
 
-
 export async function generateDefaultData(database) {
-    database.action(async (action) => {
-        await action.subAction(() => db.unsafeResetDatabase())
-        const accounts = flatMap((accountDetail) => makeAccount(database, accountDetail), accountDetails)
-        const categories = flatMap((categoryDetail) => makeCategory(database, categoryDetail), categoryDetails)
+    database.write(async writer => {
+        const post = await database.get('accounts').query().fetch()
+        // const accounts = flatMap((accountDetail) => makeAccount(db, accountDetail), accountDetails)
+        let accounts = []
+        let categories = []
+        accountDetails.forEach(accountDetail => accounts.push(makeAccount(database, accountDetail)))
+        categoryDetails.forEach(categoryDetail => categories.push(makeCategory(database, categoryDetail)))
+
+        const allRecords = [...accounts, ...categories]
+
+        await database.batch(...allRecords)
+
+        return allRecords.length
     })
 }

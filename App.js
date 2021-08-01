@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native'
-import { default as React, default as React, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Home from './src/components/Home'
 import Login from './src/components/Login'
 
