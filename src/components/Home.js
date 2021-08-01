@@ -29,8 +29,8 @@ const Home = ({ navigation }) => {
     }
 
     return (
-        <View>
-            {generated && <AccountList database={database} navigation={navigation} />}
+        <View style={{flex:1}}>
+            {generated && <AccountList navigation={navigation} />}
         </View>
     )
 }

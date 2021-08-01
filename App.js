@@ -5,6 +5,7 @@ import { ThemeProvider } from 'react-native-elements'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Account from './src/components/Account'
 import AccountList from './src/components/AccountList'
+import AddAccount from './src/components/AddAccount'
 import ExpenseList from './src/components/ExpenseList'
 import Home from './src/components/Home'
 import Login from './src/components/Login'
@@ -19,7 +20,7 @@ const theme = {
   Header: {
     placement: 'left',
     leftComponent: { icon: 'menu', color: '#fff' },
-    centerComponent: { text: 'MY TITLE', style: { color: '#fff' } },
+    centerComponent: { text: 'MY TITLE', style: { color: '#fff', fontSize:18 } },
     rightComponent: { icon: 'home', color: '#fff' },
     backgroundColor: '#8c776e'
   }
@@ -44,6 +45,7 @@ const App = () => {
               <Stack.Screen name="ExpenseList" component={ExpenseList} />
               <Stack.Screen name="Menu" component={Menu} />
               <Stack.Screen name="Account" component={Account} />
+              <Stack.Screen name="AddAccount" component={AddAccount} />
             </Stack.Navigator>
             : <Login />}
         </NavigationContainer>

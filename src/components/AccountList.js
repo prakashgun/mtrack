@@ -1,8 +1,9 @@
 import withObservables from '@nozbe/with-observables'
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
-import { Header, Icon, ListItem } from 'react-native-elements'
+import { TouchableOpacity, View } from 'react-native'
+import { Button, Header, Icon, ListItem } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
+import { database } from '../../index'
 
 const RawAccountItem = ({ account, onPress }) => (
     <TouchableOpacity onPress={onPress}>
@@ -25,28 +26,31 @@ const AccountItem = withObservables(['account'], ({ account }) => ({
 
 const AccountList = ({ accounts, navigation }) => {
     return (
-        <ScrollView>
-            <Header
-                leftComponent={{ onPress: () => navigation.navigate('Menu') }}
-                centerComponent={{ text: 'Accounts' }}
-            />
-            {
-                accounts.map((account) => (
-                    <AccountItem
-                        account={account}
-                        key={account.id}
-                        onPress={() => {
-                            console.log('Account clicked')
-                            return navigation.navigate('Account', {id: id})
-                        }}
-                    />
-                ))
-            }
-        </ScrollView>
+        <View>
+            <ScrollView >
+                <Header
+                    leftComponent={{ onPress: () => navigation.navigate('Menu') }}
+                    centerComponent={{ text: 'Accounts' }}
+                />
+                {
+                    accounts.map((account) => (
+                        <AccountItem
+                            account={account}
+                            key={account.id}
+                            onPress={() => {
+                                console.log('Account clicked')
+                                return navigation.navigate('Account', { id: id })
+                            }}
+                        />
+                    ))
+                }
+            </ScrollView>
+            <Button title="Add" onPress={() => navigation.navigate('AddAccount')} />
+        </View>
     )
 }
 
-const enhance = withObservables([], ({ database }) => ({
+const enhance = withObservables([], () => ({
     accounts: database.collections.get('accounts').query()
 }))
 
