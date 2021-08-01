@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React, { useState } from 'react'
 import { ThemeProvider } from 'react-native-elements'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { database } from './index'
+import Account from './src/components/Account'
 import AccountList from './src/components/AccountList'
 import ExpenseList from './src/components/ExpenseList'
 import Home from './src/components/Home'
@@ -39,10 +39,11 @@ const App = () => {
         <NavigationContainer>
           {isLoggedIn ?
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-              <Stack.Screen name="Home" component={Home} initialParams={{ database: database }} />
-              <Stack.Screen name="AccountList" component={AccountList} initialParams={{ database: database }} />
-              <Stack.Screen name="ExpenseList" component={ExpenseList} initialParams={{ database: database }} />
-              <Stack.Screen name="Menu" component={Menu} initialParams={{ database: database }} />
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="AccountList" component={AccountList} />
+              <Stack.Screen name="ExpenseList" component={ExpenseList} />
+              <Stack.Screen name="Menu" component={Menu} />
+              <Stack.Screen name="Account" component={Account} />
             </Stack.Navigator>
             : <Login />}
         </NavigationContainer>
