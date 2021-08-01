@@ -1,13 +1,16 @@
-import { createStackNavigator } from '@react-navigation/stack'
 import React, { useEffect, useState } from 'react'
+import { View } from 'react-native'
 import { database } from '../../index'
-import ExpenseList from '../components/ExpenseList'
 import { generateDefaultData } from '../model/generateDefaultData'
+import AccountList from './AccountList'
 
-const Stack = createStackNavigator()
+const Home = ({ navigation }) => {
 
-const Home = () => {
-    const expenses = useState([])
+    const [generated, setGenerated] = useState(false)
+
+    useEffect(() => {
+        checkAndCreateDefaultData()
+    }, [])
 
     const checkAndCreateDefaultData = async () => {
         const accountsCollection = database.get('accounts')
@@ -21,16 +24,14 @@ const Home = () => {
             const accounts = await accountsCollection.query().fetch()
             console.log(accounts)
         }
+
+        setGenerated(true)
     }
 
-    useEffect(() => {
-        checkAndCreateDefaultData()
-    }, [])
-
     return (
-        <Stack.Navigator>
-            <Stack.Screen name="ExpenseList" component={ExpenseList} />
-        </Stack.Navigator>
+        <View>
+            {generated && <AccountList database={database} navigation={navigation} />}
+        </View>
     )
 }
 
