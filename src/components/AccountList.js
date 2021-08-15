@@ -39,7 +39,7 @@ const AccountList = ({ accounts, navigation }) => {
                             key={account.id}
                             onPress={() => {
                                 console.log('Account clicked')
-                                return navigation.navigate('Account', { id: id })
+                                return navigation.navigate('Account', { id: account.id })
                             }}
                         />
                     ))
