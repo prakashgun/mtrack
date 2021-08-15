@@ -16,7 +16,7 @@ const AddAccount = ({ navigation }) => {
         }
 
         if (!amount) {
-            Alert.alert('Amount cant be empty')
+            Alert.alert('Amount cannot be empty')
             return
         }
 

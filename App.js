@@ -6,6 +6,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import Account from './src/components/Account'
 import AccountList from './src/components/AccountList'
 import AddAccount from './src/components/AddAccount'
+import AddCategory from './src/components/AddCategory'
+import Category from './src/components/Category'
+import CategoryList from './src/components/CategoryList'
 import ExpenseList from './src/components/ExpenseList'
 import Home from './src/components/Home'
 import Login from './src/components/Login'
@@ -20,7 +23,7 @@ const theme = {
   Header: {
     placement: 'left',
     leftComponent: { icon: 'menu', color: '#fff' },
-    centerComponent: { text: 'MY TITLE', style: { color: '#fff', fontSize:18 } },
+    centerComponent: { text: 'MY TITLE', style: { color: '#fff', fontSize: 18 } },
     rightComponent: { icon: 'home', color: '#fff' },
     backgroundColor: '#8c776e'
   }
@@ -32,8 +35,6 @@ const Stack = createStackNavigator()
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true)
 
-
-
   return (
     <SafeAreaProvider>
       <ThemeProvider theme={theme}>
@@ -41,11 +42,14 @@ const App = () => {
           {isLoggedIn ?
             <Stack.Navigator screenOptions={{ headerShown: false }}>
               <Stack.Screen name="Home" component={Home} />
-              <Stack.Screen name="AccountList" component={AccountList} />
-              <Stack.Screen name="ExpenseList" component={ExpenseList} />
               <Stack.Screen name="Menu" component={Menu} />
-              <Stack.Screen name="Account" component={Account} />
+              <Stack.Screen name="AccountList" component={AccountList} />
               <Stack.Screen name="AddAccount" component={AddAccount} />
+              <Stack.Screen name="Account" component={Account} />
+              <Stack.Screen name="CategoryList" component={CategoryList} />
+              <Stack.Screen name="AddCategory" component={AddCategory} />
+              <Stack.Screen name="Category" component={Category} />
+              <Stack.Screen name="ExpenseList" component={ExpenseList} />
             </Stack.Navigator>
             : <Login />}
         </NavigationContainer>
