@@ -8,8 +8,11 @@ const makeAccount = (db, accountDetail) => db.collections.get('accounts').prepar
 
 const makeCategory = (db, categoryDetail) => db.collections.get('categories').prepareCreate((category) => {
     category.name = categoryDetail['name']
-    category.icon_name = categoryDetail['icon_name']
-    category.icon_type = categoryDetail['icon_type']
+    console.log('Category detail inside make category')
+    console.log(categoryDetail)
+    console.log(categoryDetail['icon_name'])
+    category.iconName = categoryDetail['icon_name']
+    category.iconType = categoryDetail['icon_type']
 })
 
 export async function generateDefaultData(database) {
@@ -22,6 +25,8 @@ export async function generateDefaultData(database) {
         categoryDetails.forEach(categoryDetail => categories.push(makeCategory(database, categoryDetail)))
 
         const allRecords = [...accounts, ...categories]
+
+        console.log(allRecords)
 
         await database.batch(...allRecords)
 
