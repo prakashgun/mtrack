@@ -30,6 +30,16 @@ const Menu = ({ navigation }) => {
                     </ListItem.Content>
                 </ListItem>
             </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('ExpenseList')}
+            >
+                <ListItem key="ExpenseList" bottomDivider>
+                    <Icon name="price-tag" type="entypo" />
+                    <ListItem.Content>
+                        <ListItem.Title>Expenses</ListItem.Title>
+                    </ListItem.Content>
+                </ListItem>
+            </TouchableOpacity>
         </View>
     )
 }

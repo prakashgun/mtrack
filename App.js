@@ -7,12 +7,14 @@ import Account from './src/components/Account'
 import AccountList from './src/components/AccountList'
 import AddAccount from './src/components/AddAccount'
 import AddCategory from './src/components/AddCategory'
+import AddExpense from './src/components/AddExpense'
 import Category from './src/components/Category'
 import CategoryList from './src/components/CategoryList'
 import ExpenseList from './src/components/ExpenseList'
 import Home from './src/components/Home'
 import Login from './src/components/Login'
 import Menu from './src/components/Menu'
+import Expense from './src/model/Expense'
 
 const theme = {
   Button: {
@@ -41,7 +43,11 @@ const App = () => {
         <NavigationContainer>
           {isLoggedIn ?
             <Stack.Navigator screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="ExpenseList" component={ExpenseList} />
+              <Stack.Screen name="AddExpense" component={AddExpense} />
+              <Stack.Screen name="Expense" component={Expense} />
               <Stack.Screen name="Home" component={Home} />
+
               <Stack.Screen name="Menu" component={Menu} />
               <Stack.Screen name="AccountList" component={AccountList} />
               <Stack.Screen name="AddAccount" component={AddAccount} />
@@ -49,7 +55,6 @@ const App = () => {
               <Stack.Screen name="CategoryList" component={CategoryList} />
               <Stack.Screen name="AddCategory" component={AddCategory} />
               <Stack.Screen name="Category" component={Category} />
-              <Stack.Screen name="ExpenseList" component={ExpenseList} />
             </Stack.Navigator>
             : <Login />}
         </NavigationContainer>
