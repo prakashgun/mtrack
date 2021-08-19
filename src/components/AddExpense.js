@@ -1,6 +1,6 @@
 import withObservables from '@nozbe/with-observables'
 import React, { useState } from 'react'
-import { Alert, ScrollView, View } from 'react-native'
+import { Alert, ScrollView, View, StyleSheet } from 'react-native'
 import { Button, Header, Icon, Input, ListItem } from 'react-native-elements'
 import { database } from '../../index'
 
@@ -69,23 +69,26 @@ const AddExpense = ({ navigation, accounts, categories }) => {
     }
 
     return (
-        <View>
+        <View style={styles.container}>
             <Header
                 leftComponent={{ onPress: () => navigation.navigate('Menu') }}
                 centerComponent={{ text: 'Expense' }}
+                style={styles.input}
             />
             <Input
                 placeholder="Name"
                 leftIcon={{ type: 'font-awesome', name: 'bank' }}
                 onChangeText={setName}
+                style={styles.input}
             />
             <Input
                 placeholder="Amount"
                 leftIcon={{ type: 'material-icons', name: 'account-balance-wallet' }}
                 keyboardType="numeric"
                 onChangeText={setAmount}
+                style={styles.input}
             />
-            <ListItem.Accordion
+            <ListItem.Accordion 
                 content={
                     <>
                         <Icon name="bank" type="font-awesome" />
@@ -100,9 +103,10 @@ const AddExpense = ({ navigation, accounts, categories }) => {
                 }}
                 containerStyle={{ backgroundColor: 'inherit', paddingBottom: 15, marginBottom: 30 }}
                 bottomDivider
+                style={styles.input}
             >
                 <ScrollView>
-                    {accounts && accounts.map((account, i) => (
+                    {accounts.map((account, i) => (
                         <ListItem key={i} onPress={() => onAccountIconPress(account)} bottomDivider>
                             <Icon name="bank" type="font-awesome" />
                             <ListItem.Content>
@@ -131,6 +135,7 @@ const AddExpense = ({ navigation, accounts, categories }) => {
                 }}
                 containerStyle={{ backgroundColor: 'inherit', paddingBottom: 15, marginBottom: 30 }}
                 bottomDivider
+                style={styles.input}
             >
                 <ScrollView>
                     {categories && categories.map((category, i) => (
@@ -143,7 +148,7 @@ const AddExpense = ({ navigation, accounts, categories }) => {
                     ))}
                 </ScrollView>
             </ListItem.Accordion>
-            <Button title="Submit" onPress={onAddItemPress} />
+            <Button style={styles.input} title="Submit" onPress={onAddItemPress} />
         </View>
     )
 }
@@ -154,3 +159,16 @@ const enhance = withObservables([], () => ({
 }))
 
 export default enhance(AddExpense)
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        borderColor: 'red',
+        borderWidth:2
+    },
+    input:{
+        flex:1,
+        borderColor:'yellow',
+        borderWidth:2
+    }
+}) 

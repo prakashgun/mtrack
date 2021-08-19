@@ -14,7 +14,7 @@ import ExpenseList from './src/components/ExpenseList'
 import Home from './src/components/Home'
 import Login from './src/components/Login'
 import Menu from './src/components/Menu'
-import Expense from './src/model/Expense'
+import Expense from './src/components/Expense'
 
 const theme = {
   Button: {
