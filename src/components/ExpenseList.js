@@ -1,5 +1,6 @@
 import { Q } from '@nozbe/watermelondb'
 import withObservables from '@nozbe/with-observables'
+import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Button, FAB, Header, Icon, ListItem, Text } from 'react-native-elements'
@@ -30,9 +31,9 @@ const ExpenseItem = withObservables(['expense'], ({ expense }) => ({
     category: expense.category
 }))(RawExpenseItem)
 
-const RawExpenseList = ({ startTime, endTime, expenses, navigation }) => {
-
+const RawExpenseList = ({ startTime, endTime, expenses }) => {
     const [total, setTotal] = useState(0)
+    const navigation = useNavigation()
 
     const getTotal = async () => {
         const result = await database.get('expenses').query(
@@ -72,10 +73,9 @@ const RawExpenseList = ({ startTime, endTime, expenses, navigation }) => {
                 <Icon name="bank" type="font-awesome" />
                 <ListItem.Content>
                     <ListItem.Title>Total</ListItem.Title>
-                    {/* <ListItem.Subtitle>{account.name}</ListItem.Subtitle> */}
                 </ListItem.Content>
                 <ListItem.Content right>
-                    <ListItem.Title>{total}</ListItem.Title>
+                    <ListItem.Title style={{fontSize:20}}>{total}</ListItem.Title>
                 </ListItem.Content>
             </ListItem>
             <Button title="Add" onPress={() => navigation.navigate('AddExpense')} />
