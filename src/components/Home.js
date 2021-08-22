@@ -22,7 +22,6 @@ const Home = ({ navigation }) => {
         } else {
             console.log('Accounts exist')
             const accounts = await accountsCollection.query().fetch()
-            console.log(accounts)
         }
 
         setGenerated(true)

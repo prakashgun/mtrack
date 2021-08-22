@@ -21,8 +21,6 @@ const AddAccount = ({ navigation }) => {
         }
 
         await database.write(async () => {
-            console.log('amount is')
-            console.log(amount)
 
             const newAccount = await database.get('accounts').create(account => {
                 account.name = name
@@ -30,7 +28,6 @@ const AddAccount = ({ navigation }) => {
             })
 
             console.log('Account created')
-            console.log(newAccount)
         })
 
         navigation.navigate('AccountList')

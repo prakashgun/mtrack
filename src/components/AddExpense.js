@@ -59,9 +59,6 @@ const AddExpense = ({ navigation, accounts, categories }) => {
         }
 
         await database.write(async () => {
-            console.log('amount is')
-            console.log(amount)
-
             const newExpense = await database.get('expenses').create(expense => {
                 expense.name = name
                 expense.amount = Number(amount)
@@ -70,7 +67,6 @@ const AddExpense = ({ navigation, accounts, categories }) => {
             })
 
             console.log('Expense created')
-            console.log(newExpense)
         })
 
         navigation.navigate('ExpenseList')

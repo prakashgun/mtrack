@@ -90,7 +90,6 @@ const AddCategory = ({ navigation }) => {
             })
 
             console.log('Category created')
-            console.log(newCategory)
         })
 
         navigation.navigate('CategoryList')

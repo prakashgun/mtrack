@@ -24,10 +24,6 @@ const CategoryItem = withObservables(['category'], ({ category }) => ({
 }))(RawCategoryItem)
 
 const CategoryList = ({ categories, navigation }) => {
-
-    useEffect(() => {
-        console.log(categories)
-    }, [])
     
     return (
         <View style={styles.container}>

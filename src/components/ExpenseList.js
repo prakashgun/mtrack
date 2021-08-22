@@ -5,7 +5,7 @@ import { Button, Header, Icon, ListItem } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
 import { database } from '../../index'
 
-const RawExpenseItem = ({ expense, account,category, onPress }) => (
+const RawExpenseItem = ({ expense, account, category, onPress }) => (
     <TouchableOpacity onPress={onPress}>
         <ListItem
             key={expense.id}
@@ -14,8 +14,10 @@ const RawExpenseItem = ({ expense, account,category, onPress }) => (
             <Icon name={category.iconName} type={category.iconType} />
             <ListItem.Content>
                 <ListItem.Title>{expense.name}</ListItem.Title>
-                <ListItem.Subtitle>{expense.amount}</ListItem.Subtitle>
                 <ListItem.Subtitle>{account.name}</ListItem.Subtitle>
+            </ListItem.Content>
+            <ListItem.Content right>
+                <ListItem.Subtitle>{expense.amount}</ListItem.Subtitle>
             </ListItem.Content>
         </ListItem>
     </TouchableOpacity>
