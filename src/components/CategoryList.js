@@ -1,6 +1,6 @@
 import withObservables from '@nozbe/with-observables'
 import React, { useEffect } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Button, Header, Icon, ListItem } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
 import { database } from '../../index'
@@ -29,8 +29,8 @@ const CategoryList = ({ categories, navigation }) => {
         console.log(categories)
     }, [])
     return (
-        <View>
-            <ScrollView >
+        <View style={styles.container}>
+            <ScrollView style={styles.list} >
                 <Header
                     leftComponent={{ onPress: () => navigation.navigate('Menu') }}
                     centerComponent={{ text: 'Categories' }}
@@ -58,3 +58,16 @@ const enhance = withObservables([], () => ({
 }))
 
 export default enhance(CategoryList)
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        borderColor: 'red',
+        borderWidth: 2
+    },
+    list: {
+        flex: 1,
+        borderColor: 'yellow',
+        borderWidth: 2
+    }
+})

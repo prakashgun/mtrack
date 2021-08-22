@@ -1,7 +1,9 @@
 import withObservables from '@nozbe/with-observables'
 import React, { useState } from 'react'
+import { Text } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { Alert, ScrollView, View, StyleSheet } from 'react-native'
-import { Button, Header, Icon, Input, ListItem } from 'react-native-elements'
+import { Button, Header, Icon, Input, ListItem, Overlay } from 'react-native-elements'
 import { database } from '../../index'
 
 const AddExpense = ({ navigation, accounts, categories }) => {
@@ -11,6 +13,14 @@ const AddExpense = ({ navigation, accounts, categories }) => {
     const [selectedAccount, setSelectedAccount] = useState(accounts[0])
     const [categoriesExpanded, setCategoriesExpanded] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState(categories[0])
+
+    const toggleCategoriesOverlay = () => {
+        setCategoriesExpanded(!categoriesExpanded)
+    }
+
+    const toggleAccountsOverlay = () => {
+        setAccountsExpanded(!accountsExpanded)
+    }
 
     const onAccountIconPress = (account) => {
         console.log('account icon pressed: ', account)
@@ -88,7 +98,49 @@ const AddExpense = ({ navigation, accounts, categories }) => {
                 onChangeText={setAmount}
                 style={styles.input}
             />
-            <ListItem.Accordion 
+            <TouchableOpacity onPress={toggleCategoriesOverlay}>
+                <Input
+                    placeholder={selectedCategory.name}
+                    leftIcon={{ type: selectedCategory.iconType, name: selectedCategory.iconName }}
+                    onChangeText={() => console.log('Catgeory selected')}
+                    style={styles.input}
+                    disabled
+                />
+            </TouchableOpacity>
+            <Overlay fullScreen={true} isVisible={categoriesExpanded} onBackdropPress={toggleCategoriesOverlay}>
+                <ScrollView>
+                    {categories && categories.map((category, i) => (
+                        <ListItem key={i} onPress={() => onCategoryIconPress(category)} bottomDivider>
+                            <Icon name={category.iconName} type={category.iconType} />
+                            <ListItem.Content>
+                                <ListItem.Title>{category.name}</ListItem.Title>
+                            </ListItem.Content>
+                        </ListItem>
+                    ))}
+                </ScrollView>
+            </Overlay>
+            <TouchableOpacity onPress={toggleAccountsOverlay}>
+                <Input
+                    placeholder={selectedAccount.name}
+                    leftIcon={{ type: "font-awesome", name: "bank" }}
+                    onChangeText={() => console.log('Account selected')}
+                    style={styles.input}
+                    disabled
+                />
+            </TouchableOpacity>
+            <Overlay fullScreen={true} isVisible={accountsExpanded} onBackdropPress={toggleAccountsOverlay}>
+                <ScrollView>
+                {accounts.map((account, i) => (
+                        <ListItem key={i} onPress={() => onAccountIconPress(account)} bottomDivider>
+                            <Icon name="bank" type="font-awesome" />
+                            <ListItem.Content>
+                                <ListItem.Title>{account.name}</ListItem.Title>
+                            </ListItem.Content>
+                        </ListItem>
+                    ))}
+                </ScrollView>
+            </Overlay>
+            {/* <ListItem.Accordion
                 content={
                     <>
                         <Icon name="bank" type="font-awesome" />
@@ -115,9 +167,9 @@ const AddExpense = ({ navigation, accounts, categories }) => {
                         </ListItem>
                     ))}
                 </ScrollView>
-            </ListItem.Accordion>
+            </ListItem.Accordion> */}
 
-            <ListItem.Accordion
+            {/* <ListItem.Accordion
                 content={
                     <>
                         <Icon
@@ -147,7 +199,7 @@ const AddExpense = ({ navigation, accounts, categories }) => {
                         </ListItem>
                     ))}
                 </ScrollView>
-            </ListItem.Accordion>
+            </ListItem.Accordion> */}
             <Button style={styles.input} title="Submit" onPress={onAddItemPress} />
         </View>
     )
@@ -161,14 +213,10 @@ const enhance = withObservables([], () => ({
 export default enhance(AddExpense)
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        borderColor: 'red',
-        borderWidth:2
+    container: {
+        flex: 1
     },
-    input:{
-        flex:1,
-        borderColor:'yellow',
-        borderWidth:2
+    input: {
+        flex: 1
     }
-}) 
+})
