@@ -69,7 +69,7 @@ const AddExpense = ({ navigation, accounts, categories }) => {
             console.log('Expense created')
         })
 
-        navigation.navigate('ExpenseList')
+        navigation.goBack()
     }
 
     return (

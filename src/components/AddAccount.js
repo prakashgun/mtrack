@@ -30,7 +30,7 @@ const AddAccount = ({ navigation }) => {
             console.log('Account created')
         })
 
-        navigation.navigate('AccountList')
+        navigation.goBack()
     }
 
     return (

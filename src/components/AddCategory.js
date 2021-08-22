@@ -92,7 +92,7 @@ const AddCategory = ({ navigation }) => {
             console.log('Category created')
         })
 
-        navigation.navigate('CategoryList')
+        navigation.goBack()
     }
 
     return (
