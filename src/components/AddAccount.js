@@ -53,7 +53,7 @@ const AddAccount = ({ navigation }) => {
                 keyboardType="numeric"
                 onChangeText={setAmount}
             />
-            <Button title="Submit" onPress={onAddItemPress} />
+            <Button title="Save" onPress={onAddItemPress} />
         </View>
     )
 }

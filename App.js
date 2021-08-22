@@ -43,6 +43,10 @@ const App = () => {
         <NavigationContainer>
           {isLoggedIn ?
             <Stack.Navigator screenOptions={{ headerShown: false }}>
+                            <Stack.Screen name="CategoryList" component={CategoryList} />
+              <Stack.Screen name="AddCategory" component={AddCategory} />
+              <Stack.Screen name="Category" component={Category} />
+              
               <Stack.Screen name="ExpenseList" component={ExpenseList} />
               <Stack.Screen name="AddExpense" component={AddExpense} />
               <Stack.Screen name="Expense" component={Expense} />
@@ -52,9 +56,7 @@ const App = () => {
               <Stack.Screen name="AccountList" component={AccountList} />
               <Stack.Screen name="AddAccount" component={AddAccount} />
               <Stack.Screen name="Account" component={Account} />
-              <Stack.Screen name="CategoryList" component={CategoryList} />
-              <Stack.Screen name="AddCategory" component={AddCategory} />
-              <Stack.Screen name="Category" component={Category} />
+
             </Stack.Navigator>
             : <Login />}
         </NavigationContainer>

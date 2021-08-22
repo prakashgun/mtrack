@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
-import { ScrollView } from 'react-native'
-import { Alert, View } from 'react-native'
-import { Button, Header, Icon, Input, ListItem } from 'react-native-elements'
+import { Alert, ScrollView, TouchableOpacity, View } from 'react-native'
+import { Button, Header, Icon, Input, ListItem, Overlay } from 'react-native-elements'
 import { database } from '../../index'
 
 
 const AddCategory = ({ navigation }) => {
     const [name, setName] = useState('')
-    const [icon, setIcon] = useState({
-        icon_name: 'category',
-        icon_type: 'material-icons'
-    })
+
     const [iconSetExpanded, setIconSetExpanded] = useState(false)
 
+    const toggleCategoriesOverlay = () => {
+        setIconSetExpanded(!iconSetExpanded)
+    }
+
     const icons = [
+        { icon_name: 'bowl', icon_type: 'entypo' },
+
         { icon_name: 'customerservice', icon_type: 'ant-design' },
         { icon_name: 'creditcard', icon_type: 'ant-design' },
         { icon_name: 'codesquareo', icon_type: 'ant-design' },
@@ -51,7 +53,6 @@ const AddCategory = ({ navigation }) => {
         { icon_name: 'block', icon_type: 'entypo' },
         { icon_name: 'book', icon_type: 'entypo' },
         { icon_name: 'bookmark', icon_type: 'entypo' },
-        { icon_name: 'bowl', icon_type: 'entypo' },
         { icon_name: 'box', icon_type: 'entypo' },
         { icon_name: 'briefcase', icon_type: 'entypo' },
         { icon_name: 'brush', icon_type: 'entypo' },
@@ -61,9 +62,11 @@ const AddCategory = ({ navigation }) => {
         { icon_name: 'colours', icon_type: 'entypo' },
     ]
 
+    const [selectedIcon, setSelectedIcon] = useState(icons[0])
+
     const onIconPress = (icon) => {
         console.log('Icon pressed: ', icon)
-        setIcon(icon)
+        setSelectedIcon(icon)
     }
 
     const onAddItemPress = async () => {
@@ -73,7 +76,7 @@ const AddCategory = ({ navigation }) => {
             return
         }
 
-        if (!icon) {
+        if (!selectedIcon) {
             Alert.alert('Icon cannot be empty')
             return
         }
@@ -82,8 +85,8 @@ const AddCategory = ({ navigation }) => {
 
             const newCategory = await database.get('categories').create(category => {
                 category.name = name
-                category.iconName = icon.icon_name
-                category.iconType = icon.icon_type
+                category.iconName = selectedIcon.icon_name
+                category.iconType = selectedIcon.icon_type
             })
 
             console.log('Category created')
@@ -105,21 +108,15 @@ const AddCategory = ({ navigation }) => {
                 onChangeText={setName}
             />
 
-            <ListItem.Accordion
-                content={
-                    <>
-                        <Icon type="font-awesome" name="fonticons" />
-                        <ListItem.Content>
-                            <ListItem.Title> Choose Icon</ListItem.Title>
-                        </ListItem.Content>
-                    </>
-                }
-                isExpanded={iconSetExpanded}
-                onPress={() => {
-                    setIconSetExpanded(!iconSetExpanded)
-                }}
-                bottomDivider
-            >
+            <TouchableOpacity onPress={toggleCategoriesOverlay}>
+                <Input
+                    placeholder={selectedIcon.icon_name}
+                    leftIcon={{ type: selectedIcon.icon_type, name: selectedIcon.icon_name }}
+                    onChangeText={() => console.log('Icon selected')}
+                    disabled
+                />
+            </TouchableOpacity>
+            <Overlay fullScreen={true} isVisible={iconSetExpanded} onBackdropPress={toggleCategoriesOverlay}>
                 <ScrollView>
                     {icons.map((icon, i) => (
                         <ListItem key={i} onPress={() => onIconPress(icon)} bottomDivider>
@@ -130,8 +127,8 @@ const AddCategory = ({ navigation }) => {
                         </ListItem>
                     ))}
                 </ScrollView>
-            </ListItem.Accordion>
-            <Button title="Submit" onPress={onAddItemPress} />
+            </Overlay>
+            <Button title="Save" onPress={onAddItemPress} />
         </View>
     )
 }

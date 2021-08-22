@@ -138,7 +138,7 @@ const AddExpense = ({ navigation, accounts, categories }) => {
                     ))}
                 </ScrollView>
             </Overlay>
-            <Button style={styles.input} title="Submit" onPress={onAddItemPress} />
+            <Button style={styles.input} title="Save" onPress={onAddItemPress} />
         </View>
     )
 }
@@ -154,7 +154,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1
     },
-    input: {
-        flex: 1
-    }
+    input: {}
 })

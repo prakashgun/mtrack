@@ -28,6 +28,7 @@ const CategoryList = ({ categories, navigation }) => {
     useEffect(() => {
         console.log(categories)
     }, [])
+    
     return (
         <View style={styles.container}>
             <ScrollView style={styles.list} >
