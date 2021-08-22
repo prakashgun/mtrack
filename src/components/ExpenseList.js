@@ -1,5 +1,6 @@
+import { Q } from '@nozbe/watermelondb'
 import withObservables from '@nozbe/with-observables'
-import React from 'react'
+import React, { useState } from 'react'
 import { TouchableOpacity, View } from 'react-native'
 import { Button, Header, Icon, ListItem } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -29,7 +30,7 @@ const ExpenseItem = withObservables(['expense'], ({ expense }) => ({
     category: expense.category
 }))(RawExpenseItem)
 
-const ExpenseList = ({ expenses, navigation }) => {
+const RawExpenseList = ({ startTime, expenses, navigation }) => {
     return (
         <View>
             <ScrollView >
@@ -55,8 +56,25 @@ const ExpenseList = ({ expenses, navigation }) => {
     )
 }
 
-const enhance = withObservables([], () => ({
-    expenses: database.collections.get('expenses').query()
-}))
+const ExpenseListRange = withObservables([], ({ startTime, endTime }) => ({
+    expenses: database.collections.get('expenses')
+        .query(
+            Q.where('created_at', Q.gte(startTime)),
+            Q.where('created_at', Q.lte(endTime))
+        )
+}))(RawExpenseList)
 
-export default enhance(ExpenseList)
+
+const ExpenseList = ({ startDate = new Date(), endDate = new Date() }) => {
+    const [startTime, setStartTime] = useState(startDate.setHours(0, 0, 0, 0))
+    const [endTime, setEndTime] = useState(endDate.setHours(23, 59, 59, 999))
+
+    return (
+        <ExpenseListRange
+            startTime={startTime}
+            endTime={endTime}
+        />
+    )
+}
+
+export default ExpenseList
