@@ -40,7 +40,7 @@ const Category = ({ category, navigation }) => {
                 centerComponent={{ text: 'Category' }}
             />
             <PricingCard
-                color="#8c776e"
+                color="#3e3b33"
                 title={category.name}
                 button={{ title: 'Delete', onPress: () => onDeleteItemPress(category) }}
             />

@@ -1,8 +1,6 @@
 import withObservables from '@nozbe/with-observables'
 import React, { useState } from 'react'
-import { Text } from 'react-native'
-import { TouchableOpacity } from 'react-native'
-import { Alert, ScrollView, View, StyleSheet } from 'react-native'
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Button, Header, Icon, Input, ListItem, Overlay } from 'react-native-elements'
 import { database } from '../../index'
 
@@ -130,34 +128,6 @@ const AddExpense = ({ navigation, accounts, categories }) => {
             </TouchableOpacity>
             <Overlay fullScreen={true} isVisible={accountsExpanded} onBackdropPress={toggleAccountsOverlay}>
                 <ScrollView>
-                {accounts.map((account, i) => (
-                        <ListItem key={i} onPress={() => onAccountIconPress(account)} bottomDivider>
-                            <Icon name="bank" type="font-awesome" />
-                            <ListItem.Content>
-                                <ListItem.Title>{account.name}</ListItem.Title>
-                            </ListItem.Content>
-                        </ListItem>
-                    ))}
-                </ScrollView>
-            </Overlay>
-            {/* <ListItem.Accordion
-                content={
-                    <>
-                        <Icon name="bank" type="font-awesome" />
-                        <ListItem.Content>
-                            <ListItem.Title>{selectedAccount.name}</ListItem.Title>
-                        </ListItem.Content>
-                    </>
-                }
-                isExpanded={accountsExpanded}
-                onPress={() => {
-                    setAccountsExpanded(!accountsExpanded)
-                }}
-                containerStyle={{ backgroundColor: 'inherit', paddingBottom: 15, marginBottom: 30 }}
-                bottomDivider
-                style={styles.input}
-            >
-                <ScrollView>
                     {accounts.map((account, i) => (
                         <ListItem key={i} onPress={() => onAccountIconPress(account)} bottomDivider>
                             <Icon name="bank" type="font-awesome" />
@@ -167,39 +137,7 @@ const AddExpense = ({ navigation, accounts, categories }) => {
                         </ListItem>
                     ))}
                 </ScrollView>
-            </ListItem.Accordion> */}
-
-            {/* <ListItem.Accordion
-                content={
-                    <>
-                        <Icon
-                            type={selectedCategory.iconType}
-                            name={selectedCategory.iconName}
-                        />
-                        <ListItem.Content>
-                            <ListItem.Title>{selectedCategory.name}</ListItem.Title>
-                        </ListItem.Content>
-                    </>
-                }
-                isExpanded={categoriesExpanded}
-                onPress={() => {
-                    setCategoriesExpanded(!categoriesExpanded)
-                }}
-                containerStyle={{ backgroundColor: 'inherit', paddingBottom: 15, marginBottom: 30 }}
-                bottomDivider
-                style={styles.input}
-            >
-                <ScrollView>
-                    {categories && categories.map((category, i) => (
-                        <ListItem key={i} onPress={() => onCategoryIconPress(category)} bottomDivider>
-                            <Icon name={category.iconName} type={category.iconType} />
-                            <ListItem.Content>
-                                <ListItem.Title>{category.name}</ListItem.Title>
-                            </ListItem.Content>
-                        </ListItem>
-                    ))}
-                </ScrollView>
-            </ListItem.Accordion> */}
+            </Overlay>
             <Button style={styles.input} title="Submit" onPress={onAddItemPress} />
         </View>
     )

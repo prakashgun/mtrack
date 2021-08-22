@@ -40,7 +40,7 @@ const Expense = ({ expense, navigation }) => {
                 centerComponent={{ text: 'Expense' }}
             />
             <PricingCard
-                color="#8c776e"
+                color="#3e3b33"
                 title={expense.name}
                 price={expense.amount}
                 button={{ title: 'Delete', onPress: () => onDeleteItemPress(expense) }}

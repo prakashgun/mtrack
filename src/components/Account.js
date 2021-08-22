@@ -40,7 +40,7 @@ const Account = ({ account, navigation }) => {
                 centerComponent={{ text: 'Account' }}
             />
             <PricingCard
-                color="#8c776e"
+                color="#3e3b33"
                 title={account.name}
                 price={account.amount}
                 button={{ title: 'Delete', onPress: () => onDeleteItemPress(account) }}

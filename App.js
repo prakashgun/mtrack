@@ -19,7 +19,7 @@ import Expense from './src/components/Expense'
 const theme = {
   Button: {
     buttonStyle: {
-      backgroundColor: '#8c776e'
+      backgroundColor: '#3e3b33'
     },
   },
   Header: {
@@ -27,7 +27,7 @@ const theme = {
     leftComponent: { icon: 'menu', color: '#fff' },
     centerComponent: { text: 'MY TITLE', style: { color: '#fff', fontSize: 18 } },
     rightComponent: { icon: 'home', color: '#fff' },
-    backgroundColor: '#8c776e'
+    backgroundColor: '#3e3b33'
   }
 }
 
