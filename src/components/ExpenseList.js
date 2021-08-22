@@ -1,8 +1,8 @@
 import { Q } from '@nozbe/watermelondb'
 import withObservables from '@nozbe/with-observables'
 import React, { useState } from 'react'
-import { TouchableOpacity, View } from 'react-native'
-import { Button, Header, Icon, ListItem } from 'react-native-elements'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Button, FAB, Header, Icon, ListItem, Text } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
 import { database } from '../../index'
 
@@ -30,14 +30,10 @@ const ExpenseItem = withObservables(['expense'], ({ expense }) => ({
     category: expense.category
 }))(RawExpenseItem)
 
-const RawExpenseList = ({ startTime, expenses, navigation }) => {
+const RawExpenseList = ({ startTime, endTime, expenses, navigation }) => {
     return (
         <View>
             <ScrollView >
-                <Header
-                    leftComponent={{ onPress: () => navigation.navigate('Menu') }}
-                    centerComponent={{ text: 'Expenses' }}
-                />
                 {
                     expenses.map((expense) => (
                         <ExpenseItem
@@ -56,7 +52,7 @@ const RawExpenseList = ({ startTime, expenses, navigation }) => {
     )
 }
 
-const ExpenseListRange = withObservables([], ({ startTime, endTime }) => ({
+const ExpenseListRange = withObservables(['startTime', 'endTime'], ({ startTime, endTime }) => ({
     expenses: database.collections.get('expenses')
         .query(
             Q.where('created_at', Q.gte(startTime)),
@@ -64,17 +60,73 @@ const ExpenseListRange = withObservables([], ({ startTime, endTime }) => ({
         )
 }))(RawExpenseList)
 
+const DateScroller = ({ count, currentDate, decreaseDay, increaseDay }) => {
+    return (
+        <View style={styles.date_scroller}>
+            <FAB title="-" color="#3e3b33" onPress={decreaseDay} />
+            <Text style={styles.date_scroller_text}>{currentDate.toDateString()}</Text>
+            <FAB title="+" color="#3e3b33" onPress={increaseDay} />
+        </View>
+    )
+}
 
 const ExpenseList = ({ startDate = new Date(), endDate = new Date() }) => {
     const [startTime, setStartTime] = useState(startDate.setHours(0, 0, 0, 0))
     const [endTime, setEndTime] = useState(endDate.setHours(23, 59, 59, 999))
+    const [currentDate, setCurrentDate] = useState(startDate)
+    const [count, setCount] = useState(0)
+
+    const setTimes = () => {
+        setStartTime(currentDate.setHours(0,0,0,0))
+        setEndTime(currentDate.setHours(23, 59, 59, 999))
+    }
+
+    const decreaseDay = () => {
+        console.log('Decresing day')
+        currentDate.setDate(currentDate.getDate() - 1)
+        setCurrentDate(currentDate)
+        setCount(count + 1)
+        setTimes()
+    }
+
+    const increaseDay = () => {
+        console.log('Increasing day')
+        currentDate.setDate(currentDate.getDate() + 1)
+        setCurrentDate(currentDate)
+        setCount(count + 1)
+        setTimes()
+    }
 
     return (
-        <ExpenseListRange
-            startTime={startTime}
-            endTime={endTime}
-        />
+        <View>
+            <Header
+                leftComponent={{ onPress: () => navigation.navigate('Menu') }}
+                centerComponent={{ text: 'Expenses' }}
+            />
+            <DateScroller
+                count={count}
+                currentDate={currentDate}
+                decreaseDay={decreaseDay}
+                increaseDay={increaseDay}
+            />
+            <ExpenseListRange
+                startTime={startTime}
+                endTime={endTime}
+            />
+        </View>
     )
 }
 
 export default ExpenseList
+
+const styles = StyleSheet.create({
+    date_scroller: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        padding: 10
+    },
+    date_scroller_text: {
+        fontSize: 16
+    }
+})

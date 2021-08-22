@@ -43,15 +43,15 @@ const App = () => {
         <NavigationContainer>
           {isLoggedIn ?
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                            <Stack.Screen name="CategoryList" component={CategoryList} />
-              <Stack.Screen name="AddCategory" component={AddCategory} />
-              <Stack.Screen name="Category" component={Category} />
-              
               <Stack.Screen name="ExpenseList" component={ExpenseList} />
               <Stack.Screen name="AddExpense" component={AddExpense} />
               <Stack.Screen name="Expense" component={Expense} />
-              <Stack.Screen name="Home" component={Home} />
 
+              <Stack.Screen name="CategoryList" component={CategoryList} />
+              <Stack.Screen name="AddCategory" component={AddCategory} />
+              <Stack.Screen name="Category" component={Category} />
+
+              <Stack.Screen name="Home" component={Home} />
               <Stack.Screen name="Menu" component={Menu} />
               <Stack.Screen name="AccountList" component={AccountList} />
               <Stack.Screen name="AddAccount" component={AddAccount} />
