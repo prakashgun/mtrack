@@ -1,6 +1,6 @@
 import { Q } from '@nozbe/watermelondb'
 import withObservables from '@nozbe/with-observables'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Button, FAB, Header, Icon, ListItem, Text } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -18,7 +18,7 @@ const RawExpenseItem = ({ expense, account, category, onPress }) => (
                 <ListItem.Subtitle>{account.name}</ListItem.Subtitle>
             </ListItem.Content>
             <ListItem.Content right>
-                <ListItem.Subtitle>{expense.amount}</ListItem.Subtitle>
+                <ListItem.Title>{expense.amount}</ListItem.Title>
             </ListItem.Content>
         </ListItem>
     </TouchableOpacity>
@@ -31,6 +31,25 @@ const ExpenseItem = withObservables(['expense'], ({ expense }) => ({
 }))(RawExpenseItem)
 
 const RawExpenseList = ({ startTime, endTime, expenses, navigation }) => {
+
+    const [total, setTotal] = useState(0)
+
+    const getTotal = async () => {
+        const result = await database.get('expenses').query(
+            Q.unsafeSqlQuery(`select sum(amount) as total from expenses where created_at >= ${startTime} and created_at <= ${endTime} limit 1`)
+        ).unsafeFetchRaw()
+
+        if (result[0]['total'] != null) {
+            setTotal(result[0]['total'])
+        } else {
+            setTotal(0)
+        }
+    }
+
+    useEffect(() => {
+        getTotal()
+    }, [startTime])
+
     return (
         <View>
             <ScrollView >
@@ -47,12 +66,24 @@ const RawExpenseList = ({ startTime, endTime, expenses, navigation }) => {
                     ))
                 }
             </ScrollView>
+            <ListItem
+                bottomDivider
+            >
+                <Icon name="bank" type="font-awesome" />
+                <ListItem.Content>
+                    <ListItem.Title>Total</ListItem.Title>
+                    {/* <ListItem.Subtitle>{account.name}</ListItem.Subtitle> */}
+                </ListItem.Content>
+                <ListItem.Content right>
+                    <ListItem.Title>{total}</ListItem.Title>
+                </ListItem.Content>
+            </ListItem>
             <Button title="Add" onPress={() => navigation.navigate('AddExpense')} />
         </View>
     )
 }
 
-const ExpenseListRange = withObservables(['startTime', 'endTime'], ({ startTime, endTime }) => ({
+const ExpenseListRange = withObservables(['startTime', 'endTime', 'total'], ({ startTime, endTime }) => ({
     expenses: database.collections.get('expenses')
         .query(
             Q.where('created_at', Q.gte(startTime)),
@@ -77,7 +108,7 @@ const ExpenseList = ({ startDate = new Date(), endDate = new Date() }) => {
     const [count, setCount] = useState(0)
 
     const setTimes = () => {
-        setStartTime(currentDate.setHours(0,0,0,0))
+        setStartTime(currentDate.setHours(0, 0, 0, 0))
         setEndTime(currentDate.setHours(23, 59, 59, 999))
     }
 
