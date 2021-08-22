@@ -31,25 +31,16 @@ const ExpenseItem = withObservables(['expense'], ({ expense }) => ({
     category: expense.category
 }))(RawExpenseItem)
 
+
 const RawExpenseList = ({ startTime, endTime, expenses }) => {
     const [total, setTotal] = useState(0)
     const navigation = useNavigation()
 
-    const getTotal = async () => {
-        const result = await database.get('expenses').query(
-            Q.unsafeSqlQuery(`select sum(amount) as total from expenses where created_at >= ${startTime} and created_at <= ${endTime} limit 1`)
-        ).unsafeFetchRaw()
-
-        if (result[0]['total'] != null) {
-            setTotal(result[0]['total'])
-        } else {
-            setTotal(0)
-        }
-    }
-
     useEffect(() => {
-        getTotal()
-    }, [startTime])
+        let sum = 0
+        expenses.map(expense => sum += expense.amount)
+        setTotal(sum)
+    }, [startTime, expenses])
 
     return (
         <View>
@@ -75,7 +66,9 @@ const RawExpenseList = ({ startTime, endTime, expenses }) => {
                     <ListItem.Title>Total</ListItem.Title>
                 </ListItem.Content>
                 <ListItem.Content right>
-                    <ListItem.Title style={{fontSize:20}}>{total}</ListItem.Title>
+                    <ListItem.Title style={{ fontSize: 20 }}>
+                        {total}
+                    </ListItem.Title>
                 </ListItem.Content>
             </ListItem>
             <Button title="Add" onPress={() => navigation.navigate('AddExpense')} />
