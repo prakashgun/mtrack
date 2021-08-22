@@ -99,6 +99,7 @@ const ExpenseList = ({ startDate = new Date(), endDate = new Date() }) => {
     const [endTime, setEndTime] = useState(endDate.setHours(23, 59, 59, 999))
     const [currentDate, setCurrentDate] = useState(startDate)
     const [count, setCount] = useState(0)
+    const navigation = useNavigation()
 
     const setTimes = () => {
         setStartTime(currentDate.setHours(0, 0, 0, 0))

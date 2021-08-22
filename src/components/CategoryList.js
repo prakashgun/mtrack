@@ -1,4 +1,5 @@
 import withObservables from '@nozbe/with-observables'
+import { useNavigation } from '@react-navigation/native'
 import React, { useEffect } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Button, Header, Icon, ListItem } from 'react-native-elements'
@@ -23,8 +24,9 @@ const CategoryItem = withObservables(['category'], ({ category }) => ({
     category: category.observe()
 }))(RawCategoryItem)
 
-const CategoryList = ({ categories, navigation }) => {
-    
+const CategoryList = ({ categories }) => {
+    const navigation = useNavigation()
+
     return (
         <View style={styles.container}>
             <ScrollView style={styles.list} >
